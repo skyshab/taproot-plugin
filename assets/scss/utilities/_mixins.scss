@@ -1,0 +1,47 @@
+////
+/// Custom mixins.
+///
+/// @group  Tools
+/// @author Sky Shabatura <theme@sky.camp>
+/// @link   https://taproot-theme.com
+////
+
+
+$tr-mobile-max: '767px';
+$tr-tablet-min: '768px';
+$tr-tablet-max: '1024px';
+$tr-desktop-min: '1025px';
+
+
+// The screen mixin
+@mixin screen( $screen ) {
+
+    $query: '';
+
+    @if ( $screen == 'mobile' ) {
+      $query: "( max-width: #{$tr-mobile-max} )";
+    }
+
+    @if ( $screen == 'tablet' ) {
+        $query: "( min-width: #{$tr-tablet-min} ) and ( max-width: #{$tr-tablet-max} )";
+    }
+
+    @if ( $screen == 'tablet-and-under' ) {
+        $query: "( max-width: #{$tr-tablet-max} )";
+    }
+
+    @if ( $screen == 'tablet-and-up' ) {
+        $query: "( min-width: #{$tr-tablet-min} )";
+    }
+
+    @if ( $screen == 'desktop' ) {
+        $query: "( min-width: #{$tr-desktop-min} )";
+    }
+
+    @if( $query != '' ) {
+        @media #{$query}  { @content; }
+    }
+    @else {
+      @content;
+    }
+}

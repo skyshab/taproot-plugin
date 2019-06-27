@@ -1,0 +1,18 @@
+////
+/// Block imports.
+///
+/// Styles for individual blocks in the block editor. All of the core WP blocks
+/// are under the `/core` subfolder. Block styles for plugins should be in their
+/// own subfolders.
+///
+/// @group  Blocks
+/// @author Sky Shabatura <theme@sky.camp>
+/// @link   https://taproot-theme.com
+////
+
+
+// import global block styles
+@import 'block-styles';
+
+// import hero block styles
+@import 'hero/hero';

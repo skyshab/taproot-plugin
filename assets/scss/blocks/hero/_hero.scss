@@ -1,0 +1,96 @@
+////
+/// Audio block.
+///
+/// @group  Blocks
+/// @author Sky Shabatura <theme@sky.camp>
+/// @link   https://taproot-theme.com
+////
+
+
+$block-padding: 24px;
+$block-spacing: 24px;
+
+
+/**
+ * Group: All Alignment Settings
+ */
+ .wp-block[data-type="taproot/hero"] {
+
+	// Ensure not rendering outside the element
+	// as -1px causes overflow-x scrollbars
+	.editor-block-list__insertion-point {
+		left: 0;
+		right: 0;
+	}
+
+	// // Only applied when background is added to cancel out padding
+	// > .editor-block-list__block-edit > div > .wp-block-taproot-hero.has-background > .editor-inner-blocks {
+	// 	margin-top: -#{$block-padding*2 + $block-spacing};
+	// 	margin-bottom: -#{$block-padding*2 + $block-spacing};
+	// }
+
+	// Full Width Blocks
+	// specificity required to only target immediate child Blocks of a Group
+	> .editor-block-list__block-edit > div > .wp-block-taproot-hero > .editor-inner-blocks > .editor-block-list__layout > .wp-block[data-align="full"] {
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: $block-padding*2;
+		padding-right: $block-padding*2;
+
+		@media (max-width: 540px) {
+			padding-left: $block-padding*4 + $block-spacing/2; // 58px
+			padding-right: $block-padding*4 + $block-spacing/2; // 58px
+		}
+	}
+
+	// Full Width Blocks with a background (ie: has padding)
+	> .editor-block-list__block-edit > div > .wp-block-taproot-hero.has-background > .editor-inner-blocks > .editor-block-list__layout > .wp-block[data-align="full"] {
+		// note: using position `left` causes hoz scrollbars so
+		// we opt to use margin instead
+		// the 30px matches the hoz padding applied in `theme.scss`
+		// added when the Block has a background set
+		margin-left: -30px;
+
+		// 60px here is x2 the hoz padding from `theme.scss` added when
+		// the Block has a background set
+		// note: also duplicated below for full width Groups
+		width: calc(100% + 60px);
+	}
+}
+
+
+
+
+.wp-block-taproot-hero:not(.has-background) {
+    border: 4px dashed gainsboro;
+    background-color: #f0f0f0;
+}
+
+.wp-block-taproot-hero {
+    background-position: center;
+    background-size: cover;
+}
+
+.wp-block-taproot-hero .editor-inner-blocks {
+    padding: 2em;
+}
+
+.wp-block-taproot-hero .editor-inner-blocks .editor-block-list__layout {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+.wp-block[data-type="taproot/hero"] {
+    max-width: none;
+    margin-left: -42px;
+    margin-right: -42px;
+    margin-bottom: 50px;
+}
+
+.wp-block[data-type="taproot/hero"].is-selected .wp-block-taproot-hero .editor-inner-blocks {
+}
+
+.wp-block[data-type="taproot/hero"] .wp-block {
+    //   max-width: none;
+}
