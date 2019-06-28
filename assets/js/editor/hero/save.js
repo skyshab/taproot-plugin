@@ -1,8 +1,7 @@
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block - Save
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for the hero block on the front end.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -25,11 +24,11 @@ const { InnerBlocks } = window.wp.blockEditor;
 
 export default function save() {
 
-	const className = classnames( 'container' );
+    const className = classnames( 'container' );
 
-	return (
-		<div className={ className }>
-			<InnerBlocks.Content />
-		</div>
-	);
+    return (
+        <div className={ className }>
+            <InnerBlocks.Content />
+        </div>
+    );
 }

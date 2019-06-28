@@ -39,139 +39,139 @@ namespace TaprootPlugin;
  */
 class TaprootPlugin {
 
-	/**
-	 * Minimum required PHP version.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	private $php_version = '5.6.0';
+    /**
+     * Minimum required PHP version.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    private $php_version = '5.6.0';
 
-	/**
-	 * Plugin directory path.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	public $dir = '';
+    /**
+     * Plugin directory path.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    public $dir = '';
 
-	/**
-	 * Plugin directory URI.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
-	 */
-	public $uri = '';
-
-
-	/**
-	 * Returns the instance.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return object
-	 */
-	public static function get_instance() {
-
-		static $instance = null;
-
-		if ( is_null( $instance ) ) {
-			$instance = new self;
-			$instance->setup();
-		}
-
-		return $instance;
-	}
-
-	/**
-	 * Constructor method.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return void
-	 */
-	private function __construct() {}
+    /**
+     * Plugin directory URI.
+     *
+     * @since  1.0.0
+     * @access public
+     * @var    string
+     */
+    public $uri = '';
 
 
-	/**
-	 * Sets up globals.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return void
-	 */
-	private function setup() {
+    /**
+     * Returns the instance.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return object
+     */
+    public static function get_instance() {
 
-		// Check if we meet the minimum PHP version.
-		if ( version_compare( PHP_VERSION, $this->php_version, '<' ) ) {
+        static $instance = null;
 
-			// Add admin notice.
-			add_action( 'admin_notices', array( $this, 'php_admin_notice' ) );
+        if ( is_null( $instance ) ) {
+            $instance = new self;
+            $instance->setup();
+        }
 
-			// Bail.
-			return;
-		}
+        return $instance;
+    }
 
-		// Main plugin directory path and URI.
-		$this->dir  = trailingslashit( plugin_dir_path( __FILE__ ) );
+    /**
+     * Constructor method.
+     *
+     * @since  1.0.0
+     * @access private
+     * @return void
+     */
+    private function __construct() {}
+
+
+    /**
+     * Sets up globals.
+     *
+     * @since  1.0.0
+     * @access private
+     * @return void
+     */
+    private function setup() {
+
+        // Check if we meet the minimum PHP version.
+        if ( version_compare( PHP_VERSION, $this->php_version, '<' ) ) {
+
+            // Add admin notice.
+            add_action( 'admin_notices', array( $this, 'php_admin_notice' ) );
+
+            // Bail.
+            return;
+        }
+
+        // Main plugin directory path and URI.
+        $this->dir  = trailingslashit( plugin_dir_path( __FILE__ ) );
         $this->uri  = trailingslashit( plugin_dir_url(  __FILE__ ) );
 
-		// Internationalize the text strings used.
-		add_action( 'plugins_loaded', [$this, 'i18n'], 2 );
+        // Internationalize the text strings used.
+        add_action( 'plugins_loaded', [$this, 'i18n'], 2 );
 
-		// Register activation hook.
+        // Register activation hook.
         register_activation_hook( __FILE__, [$this, 'activation'] );
 
         // boot the plugin when theme is ready
         add_action( 'taproot/bootstrap', [$this, 'boot'] );
-	}
+    }
 
 
 
-	/**
-	 * Loads the translation files.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function i18n() {
+    /**
+     * Loads the translation files.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function i18n() {
 
-		load_plugin_textdomain( 'taproot-plugin', false, trailingslashit( dirname( plugin_basename( __FILE__ ) ) ) . 'lang' );
-	}
+        load_plugin_textdomain( 'taproot-plugin', false, trailingslashit( dirname( plugin_basename( __FILE__ ) ) ) . 'lang' );
+    }
 
-	/**
-	 * Method that runs only when the plugin is activated.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function activation() {
+    /**
+     * Method that runs only when the plugin is activated.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function activation() {
 
-		// Check PHP version requirements.
-		if ( version_compare( PHP_VERSION, $this->php_version, '<' ) ) {
+        // Check PHP version requirements.
+        if ( version_compare( PHP_VERSION, $this->php_version, '<' ) ) {
 
-			// Make sure the plugin is deactivated.
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+            // Make sure the plugin is deactivated.
+            deactivate_plugins( plugin_basename( __FILE__ ) );
 
-			// Add an error message and die.
-			wp_die( $this->get_min_php_message() );
-		}
-	}
+            // Add an error message and die.
+            wp_die( $this->get_min_php_message() );
+        }
+    }
 
 
-	/**
-	 * Load required files
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return void
-	 */
-	private function includes() {
+    /**
+     * Load required files
+     *
+     * @since  1.0.0
+     * @access private
+     * @return void
+     */
+    private function includes() {
 
         array_map( function( $file ) {
             require_once( $this->dir . "inc/{$file}.php" );
@@ -184,14 +184,14 @@ class TaprootPlugin {
     }
 
 
-	/**
-	 * Initiates plugin at theme hook
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return void
-	 */
-	public function boot( $taproot ) {
+    /**
+     * Initiates plugin at theme hook
+     *
+     * @since  1.0.0
+     * @access private
+     * @return void
+     */
+    public function boot( $taproot ) {
 
         // load required files
         $this->includes();
@@ -199,44 +199,44 @@ class TaprootPlugin {
         // register providers
         $taproot->provider( \TaprootPlugin\Providers\EditorProvider::class );
         $taproot->provider( \TaprootPlugin\Providers\TemplateProvider::class );
-	}
+    }
 
 
-	/**
-	 * Returns a message noting the minimum version of PHP required.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return void
-	 */
-	private function get_min_php_message() {
+    /**
+     * Returns a message noting the minimum version of PHP required.
+     *
+     * @since  1.0.0
+     * @access private
+     * @return void
+     */
+    private function get_min_php_message() {
 
-		return sprintf(
-			__( 'Taproot requires PHP version %1$s. You are running version %2$s. Please upgrade and try again.', 'taproot-plugin' ),
-			$this->php_version,
-			PHP_VERSION
-		);
-	}
+        return sprintf(
+            __( 'Taproot requires PHP version %1$s. You are running version %2$s. Please upgrade and try again.', 'taproot-plugin' ),
+            $this->php_version,
+            PHP_VERSION
+        );
+    }
 
-	/**
-	 * Outputs the admin notice that the user needs to upgrade their PHP version. It also
-	 * auto-deactivates the plugin.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function php_admin_notice() {
+    /**
+     * Outputs the admin notice that the user needs to upgrade their PHP version. It also
+     * auto-deactivates the plugin.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function php_admin_notice() {
 
-		// Output notice.
-		printf(
-			'<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
-			esc_html( $this->get_min_php_message() )
-		);
+        // Output notice.
+        printf(
+            '<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
+            esc_html( $this->get_min_php_message() )
+        );
 
-		// Make sure the plugin is deactivated.
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-	}
+        // Make sure the plugin is deactivated.
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+    }
 }
 
 /**
@@ -247,7 +247,7 @@ class TaprootPlugin {
  * @return object
  */
 function taproot_plugin() {
-	return TaprootPlugin::get_instance();
+    return TaprootPlugin::get_instance();
 }
 
 taproot_plugin();

@@ -1,7 +1,7 @@
 /**
  * Meta Block Utility Functions
  *
- * This file contains utility functions for getting the post meta item values
+ * This file contains utility functions for the post meta block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -85,7 +85,7 @@ export function getTaxonomyList(select, attribute, taxonomy) {
  * @param controls - array of controls to render
  * @return array
  */
-export function taxonomyToggles(setAttributes, controls, taxObj) {
+export function taxonomyToggles(setAttributes, controls, taxonomies) {
 
     if( !controls ) return null;
 
@@ -101,20 +101,20 @@ export function taxonomyToggles(setAttributes, controls, taxObj) {
             <ToggleControl
                 label={ control.label }
                 checked={ control.checked }
-                onChange={ ( selected ) => {
+                onChange={ selected => {
                     values[control.attribute] = selected;
                     setAttributes( { values: values } );
 
                     if(selected){
-                        if(taxObj.indexOf(control.slug) === -1) {
-                            taxObj.push(control.slug);
+                        if(taxonomies.indexOf(control.slug) === -1) {
+                            taxonomies.push(control.slug);
                         }
                     }
                     else {
-                        taxObj = taxObj.filter(item => item !== control.slug)
+                        taxonomies = taxonomies.filter(item => item !== control.slug)
                     }
 
-                    setAttributes( { taxonomies: taxObj } );
+                    setAttributes( { taxonomies: taxonomies } );
                 } }
             />
         ));

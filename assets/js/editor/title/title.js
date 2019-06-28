@@ -20,13 +20,13 @@ const { createElement } = window.wp.element;
 
 class TaprootTitle extends Component {
 
-	render() {
-		const { tagName, className, style, content } = this.props;
+    render() {
+        const { tagName, className, style, content } = this.props;
         return createElement( tagName, {
             className: className,
             style: style
         }, content );
-	}
+    }
 }
 
 export default TaprootTitle;

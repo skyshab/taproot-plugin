@@ -29,28 +29,28 @@ use TaprootPlugin\Editor\Editor;
 class EditorProvider extends ServiceProvider {
 
 
-	/**
-	 * Register classes and bind to the container
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function register() {
+    /**
+     * Register classes and bind to the container
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function register() {
 
-		$this->app->singleton( Editor::class );
+        $this->app->singleton( Editor::class );
 
-	}
+    }
 
 
-	/**
-	 * Boot Class Instances
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function boot() {
+    /**
+     * Boot Class Instances
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function boot() {
 
         $this->app->resolve( Editor::class )->boot();
 

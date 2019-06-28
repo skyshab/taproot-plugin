@@ -26,14 +26,14 @@ use function TaprootPlugin\taproot_plugin;
 class Editor implements Bootable {
 
 
-	/**
-	 * Adds actions on the appropriate customize action hooks.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function boot() {
+    /**
+     * Adds actions on the appropriate customize action hooks.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function boot() {
         add_action( 'enqueue_block_editor_assets', [ $this, 'assets' ] );
         add_action( 'init', [ $this, 'register_post_meta' ] );
     }

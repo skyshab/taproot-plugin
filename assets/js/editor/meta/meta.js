@@ -1,8 +1,7 @@
 /**
  * Meta Block Component
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post Meta in the block editor content.
+ * This file handles the JavaScript for displaying the post meta block in the editor.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -13,15 +12,15 @@
 
 
 /**
+ * Internal dependencies
+ */
+import { getIcons } from './utilities';
+
+/**
  * WordPress dependencies
  */
 const { Component }= wp.element;
 const { createElement } = window.wp.element;
-
-/**
- * Internal dependencies
- */
-import { getIcons } from './utilities';
 
 
 class TaprootMeta extends Component {
@@ -46,9 +45,7 @@ class TaprootMeta extends Component {
                     }
 
                     item.value.forEach((term, index) => {
-
                         itemTerms.push( createElement( 'a', {href: '#'}, term ) );
-
                         // add comma after all but the last item
                         if(index !== (item.value.length - 1)){
                             itemTerms.push(', ');
@@ -61,7 +58,6 @@ class TaprootMeta extends Component {
                     itemWrapper.push( icons[item.icon] );
                     value = item.value;
                 }
-
 
                 itemWrapper.push( createElement( 'span', {
                     className: `${block}__item__content ${block}__item__content--${item.name}`
@@ -78,7 +74,7 @@ class TaprootMeta extends Component {
             className: className,
             style: style
         }, metaContent );
-	}
+    }
 
 }
 

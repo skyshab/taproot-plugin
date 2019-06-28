@@ -1,8 +1,7 @@
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for the hero area block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -11,6 +10,7 @@
  * @link      https://taproot-theme.com
  */
 
+
 /**
  * Internal dependencies
  */
@@ -18,33 +18,30 @@ import edit from './edit';
 import icon from './icon';
 import save from './save';
 
-( wp => {
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 
-    /**
-     * WordPress dependencies
-     */
-    const { __ } = wp.i18n;
-    const { registerBlockType } = wp.blocks;
 
-    // register the block
-    registerBlockType('taproot/hero', {
-        title: __( 'Hero Content' ),
-        category: 'common',
-        icon,
-        description: __( 'A block for adding custom header content' ),
-        keywords: [ __( 'hero' ), __( 'taproot' ), __( 'section' ) ],
-        supports: {
-            align: false,
-            anchor: false,
-            html: false,
-            inserter: false,
-            multiple: false,
-            reusable: false,
-            isLocked: true,
-        },
-        transforms: {},
-        edit,
-        save
-    })
-
-})( window.wp );
+// register the block
+registerBlockType('taproot/hero', {
+    title: __( 'Hero Content' ),
+    category: 'common',
+    icon,
+    description: __( 'A block for adding custom header content' ),
+    keywords: [ __( 'hero' ), __( 'taproot' ), __( 'section' ) ],
+    supports: {
+        align: false,
+        anchor: false,
+        html: false,
+        inserter: false,
+        multiple: false,
+        reusable: false,
+        isLocked: true,
+    },
+    transforms: {},
+    edit,
+    save
+})

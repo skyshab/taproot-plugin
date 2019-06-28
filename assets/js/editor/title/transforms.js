@@ -18,18 +18,18 @@
 const { createBlock } = wp.blocks;
 
 const transforms = {
-	to: [
-		{
-			type: 'block',
-			blocks: [ 'core/heading' ],
-			transform: ( { level, content } ) => {
-				return createBlock( 'core/heading', {
+    to: [
+        {
+            type: 'block',
+            blocks: [ 'core/heading' ],
+            transform: ( { level, content } ) => {
+                return createBlock( 'core/heading', {
                     level,
-					content,
-				});
-			},
-		},
-	],
+                    content,
+                });
+            },
+        },
+    ],
 };
 
 export default transforms;

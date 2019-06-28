@@ -28,8 +28,8 @@ const mix = require( 'laravel-mix' );
  */
 
 if ( process.env.export ) {
-	const exportPlugin = require( './webpack.mix.export.js' );
-	return;
+    const exportPlugin = require( './webpack.mix.export.js' );
+    return;
 }
 
 /*
@@ -60,8 +60,8 @@ mix.setPublicPath( './' );
  * @link https://laravel.com/docs/5.6/mix#url-processing
  */
 mix.options( {
-	postCss        : [ require( 'postcss-preset-env' )() ],
-	processCssUrls : false
+    postCss        : [ require( 'postcss-preset-env' )() ],
+    processCssUrls : false
 } );
 
 /*
@@ -100,9 +100,9 @@ mix.react( `${devPath}/js/editor.js`, 'dist/js' );
 
 // Sass configuration.
 var sassConfig = {
-	outputStyle : 'expanded',
-	indentType  : 'tab',
-	indentWidth : 1
+    outputStyle : 'expanded',
+    indentType  : 'tab',
+    indentWidth : 1
 };
 
 // Compile SASS/CSS.
@@ -121,26 +121,26 @@ mix.sass( `${devPath}/scss/screen.scss`, 'dist/css', sassConfig )
  * @link https://webpack.js.org/configuration/
  */
 mix.webpackConfig( {
-	stats       : 'minimal',
-	devtool     : mix.inProduction() ? false : 'source-map',
-	performance : { hints  : false    },
+    stats       : 'minimal',
+    devtool     : mix.inProduction() ? false : 'source-map',
+    performance : { hints  : false    },
     externals   : { jquery : 'jQuery' },
-	plugins     : []
+    plugins     : []
 });
 
 if ( process.env.sync ) {
 
-	/*
-	 * Monitor files for changes and inject your changes into the browser.
-	 *
-	 * @link https://laravel.com/docs/5.6/mix#browsersync-reloading
-	 */
-	mix.browserSync( {
-		proxy : 'localhost',
-		files : [
-			'dist/**/*',
-			'inc/**/*.php',
-			'taproot-plugin.php'
-		]
-	});
+    /*
+     * Monitor files for changes and inject your changes into the browser.
+     *
+     * @link https://laravel.com/docs/5.6/mix#browsersync-reloading
+     */
+    mix.browserSync( {
+        proxy : 'localhost',
+        files : [
+            'dist/**/*',
+            'inc/**/*.php',
+            'taproot-plugin.php'
+        ]
+    });
 }

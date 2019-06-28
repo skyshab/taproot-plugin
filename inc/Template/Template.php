@@ -26,14 +26,14 @@ use function TaprootPlugin\taproot_plugin;
 class Template implements Bootable {
 
 
-	/**
-	 * Adds actions on the appropriate customize action hooks.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function boot() {
+    /**
+     * Adds actions on the appropriate customize action hooks.
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function boot() {
         add_action( 'taproot/header/additional-content', [ $this, 'get_custom_header_block_content' ], 20 );
         add_filter( 'the_content', [ $this, 'remove_custom_header_block_from_content' ] );
     }

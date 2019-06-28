@@ -13,16 +13,16 @@
 
 
 /**
- * WordPress dependencies
- */
-const { __ } = window.wp.i18n;
-const { registerBlockType } = wp.blocks;
-
-/**
  * Internal dependencies
  */
 import edit from './edit';
 import transforms from './transforms';
+
+/**
+ * WordPress dependencies
+ */
+const { __ } = window.wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 
 // register the block
@@ -33,26 +33,26 @@ registerBlockType('taproot/title', {
     description: __( 'Display the page/post title in the content' ),
     keywords: [ __( 'title' ), __( 'taproot' ), __( 'post title' ) ],
     supports: {
-		className: false,
-		anchor: false,
+        className: false,
+        anchor: false,
         multiple: false,
         reusable: false,
     },
-	attributes: {
-		align: {
-			type: 'string'
-		},
-		level: {
-			type: 'number',
-			default: 1
-		},
-		textColor: {
-			type: 'string'
-		},
-		customTextColor: {
-			type: 'string'
-		}
-	},
-	transforms,
+    attributes: {
+        align: {
+            type: 'string'
+        },
+        level: {
+            type: 'number',
+            default: 1
+        },
+        textColor: {
+            type: 'string'
+        },
+        customTextColor: {
+            type: 'string'
+        }
+    },
+    transforms,
     edit
 })

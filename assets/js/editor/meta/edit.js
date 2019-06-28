@@ -1,8 +1,7 @@
 /**
- * Title Block - Edit
+ * Post Meta Block - Edit
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for displaying the post meta block in the editor.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -32,72 +31,65 @@ const { compose } = wp.compose;
 const {
     InspectorControls,
     AlignmentToolbar,
-	withColors,
-	PanelColorSettings,
+    withColors,
+    PanelColorSettings,
 } = wp.blockEditor;
 const { withSelect } = wp.data;
 
+
 function MetaEdit( {
-	attributes,
-	setAttributes,
-	textColor,
+    attributes,
+    setAttributes,
+    textColor,
     setTextColor,
     metaItems,
     toggles,
-    taxObj
+    taxonomies
 } ) {
 
-	return (
-		<>
-			<InspectorControls>
-				<PanelBody title={ __( 'Post Meta Settings' ) }>
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody title={ __( 'Post Meta Settings' ) }>
                     <AlignmentToolbar
-						value={ attributes.align }
-						onChange={ ( nextAlign ) => {
-							setAttributes( { align: nextAlign } );
-						} }
-					/>
+                        value={ attributes.align }
+                        onChange={ nextAlign => setAttributes( { align: nextAlign } ) }
+                    />
                     <ToggleControl
                         label={ __('Author') }
                         checked={ attributes.author }
-                        onChange={ ( selected ) => {
-                            setAttributes( { author: selected } );
-                        } }
+                        onChange={ selected => setAttributes( { author: selected } ) }
                     />
                     <ToggleControl
                         label={ __('Date') }
                         checked={ attributes.date }
-                        onChange={ ( selected ) => {
-                            setAttributes( { date: selected } );
-                        } }
+                        onChange={ selected => setAttributes( { date: selected } ) }
                     />
-                    { taxonomyToggles(setAttributes, toggles, taxObj) }
-				</PanelBody>
+                    { taxonomyToggles(setAttributes, toggles, taxonomies) }
+                </PanelBody>
                 <PanelColorSettings
                     title={ __( 'Color Settings' ) }
                     initialOpen={ false }
-                    colorSettings={ [
+                    colorSettings={[
                         {
                             value: textColor.color,
                             onChange: setTextColor,
-                            label: __( 'Text Color' ),
-                        },
-                    ] }
+                            label: __( 'Text Color' )
+                        }
+                    ]}
                 />
-			</InspectorControls>
+            </InspectorControls>
             <TaprootMeta
-                metaItems={metaItems}
-				className={ classnames( 'wp-block--taproot-meta taproot-meta', {
-					[ `has-text-align-${ attributes.align }` ]: attributes.align,
-					[ textColor.class ]: textColor.class,
-					'has-text-color': textColor.color,
-                } ) }
-				style={ {
-					color: textColor.color,
-				} }
+                metaItems={ metaItems }
+                className={ classnames( 'wp-block--taproot-meta taproot-meta', {
+                    [ `has-text-align-${ attributes.align }` ]: attributes.align,
+                    [ textColor.class ]: textColor.class,
+                    'has-text-color': textColor.color
+                })}
+                style={ {color: textColor.color } }
             />
-		</>
-	);
+        </>
+    );
 }
 
 export default compose( [
@@ -108,7 +100,7 @@ export default compose( [
         const {attributes} = props;
         const values = attributes.values;
         const toggles = [];
-        const taxonomies = select( 'core' ).getTaxonomies();
+        const allTaxonomies = select( 'core' ).getTaxonomies();
         const postType = select( 'core/editor' ).getCurrentPostType();
 
         if(attributes.author) {
@@ -119,14 +111,12 @@ export default compose( [
             metaItems.push({name: 'date', icon: 'date', value: getTheDate(select)});
         }
 
+        let taxonomies = [];
 
-        let taxObj = [];
-
-        if(taxonomies) {
-            taxonomies.map( taxonomy => {
+        if(allTaxonomies) {
+            allTaxonomies.map( taxonomy => {
 
                 if(taxonomy.types.includes(postType) ) {
-
                     const taxName = taxonomy.name.toLowerCase();
 
                     // add to output if taxonomy is enabled
@@ -134,8 +124,7 @@ export default compose( [
                         // if hierachial, use categories icon. Otherwise, use the tags icon
                         const icon = (taxonomy.hierarchical) ? 'categories' : 'tags';
                         metaItems.push({name: taxName, icon: icon, value: getTaxonomyList(select, taxName, taxonomy.slug )});
-
-                        taxObj.push(taxonomy.slug);
+                        taxonomies.push(taxonomy.slug);
                     }
 
                     // add to controls output
@@ -147,7 +136,7 @@ export default compose( [
         return {
             metaItems: metaItems,
             toggles: toggles,
-            taxObj: taxObj
+            taxonomies: taxonomies
         }
     })
 ] )( MetaEdit );

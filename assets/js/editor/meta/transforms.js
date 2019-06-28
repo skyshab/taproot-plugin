@@ -1,8 +1,7 @@
 /**
- * Title Block - Transforms
+ * Post Meta Block - Transforms
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for the post meta block transforms.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -18,18 +17,18 @@
 const { createBlock } = wp.blocks;
 
 const transforms = {
-	to: [
-		{
-			type: 'block',
-			blocks: [ 'core/heading' ],
-			transform: ( { level, content } ) => {
-				return createBlock( 'core/heading', {
+    to: [
+        {
+            type: 'block',
+            blocks: [ 'core/heading' ],
+            transform: ( { level, content } ) => {
+                return createBlock( 'core/heading', {
                     level,
-					content,
-				});
-			},
-		},
-	],
+                    content,
+                });
+            },
+        },
+    ],
 };
 
 export default transforms;

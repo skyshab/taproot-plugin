@@ -12,14 +12,13 @@
  */
 
 
-const { compose } = wp.compose;
-const {
-    withSelect,
-    withDispatch
-} = wp.data;
-const { ToggleControl } = wp.components;
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
-
+const { compose } = wp.compose;
+const { ToggleControl } = wp.components;
+const { withSelect, withDispatch } = wp.data;
 const {createBlock, cloneBlock} = wp.blocks;
 
 var blockID = false;
@@ -28,12 +27,12 @@ var savedBlock = false;
 export const EnableHero = compose(
     withDispatch( function( dispatch ) {
         return {
-            setCheckboxValue: function( value ) {
+            setCheckboxValue: value => {
                 dispatch('core/editor').editPost({ meta: { taprooot_add_hero_content: value } })
             }
         }
     }),
-    withSelect( function( select ) {
+    withSelect( select => {
         return {
             checkboxValue: select('core/editor').getEditedPostAttribute('meta')['taprooot_add_hero_content'],
         }
@@ -42,10 +41,8 @@ export const EnableHero = compose(
 
     // add the hero content block
     const addBlock = () => {
-
         const block = (savedBlock) ? savedBlock : createBlock( 'taproot/hero' );
         blockID = block.clientId;
-
         wp.data.dispatch( 'core/editor' ).insertBlock( block, 0 );
     }
 
@@ -64,7 +61,7 @@ export const EnableHero = compose(
         <ToggleControl
         label={ __('Enable Custom Header Content') }
         checked={ props.checkboxValue }
-        onChange={ ( isChecked ) => {
+        onChange={ isChecked => {
             isChecked = (isChecked) ? 1 : 0;
             props.setCheckboxValue( isChecked );
 

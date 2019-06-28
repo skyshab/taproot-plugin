@@ -1,48 +1,48 @@
 {
-	"name": "taproot-plugin",
-	"version": "1.0.0",
-	"description": "Taproot plugin adds functionality to the Taproot WordPress theme.",
-	"author": "Sky Shabatura",
-	"license": "GPL-2.0+",
-	"homepage": "https://taproot-theme.com",
-	"main": "assets/js/app.js",
-	"scripts": {
-		"build": "npm run prod && npm run i18n && npm run export",
-		"dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"watch:sync": "cross-env sync=1 NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"hot": "cross-env sync=1 NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"export": "cross-env export=1 NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"i18n": "npm run i18n:textdomain && npm run i18n:pot",
-		"i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,node_modules",
-		"i18n:pot": "npx wpi18n makepot"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/skyshab/taproot-plugin.git"
-	},
-	"bugs": {
-		"url": "https://github.com/skyshab/taproot/issues"
-	},
-	"devDependencies": {
-		"@babel/preset-react": "^7.0.0",
-		"lodash": "^3.3.4",
-		"browser-sync": "^2.26.3",
-		"browser-sync-webpack-plugin": "2.2.2",
-		"copy-webpack-plugin": "^4.6.0",
-		"cross-env": "^5.2.0",
-		"imagemin-mozjpeg": "^6.0.0",
-		"imagemin-webpack-plugin": "^2.4.0",
-		"laravel-mix": "^4.0.14",
-		"node-wp-i18n": "^1.2.2",
-		"postcss-preset-env": "^6.5.0",
-		"rimraf": "^2.6.3",
-		"sass": "^1.16.0",
-		"sass-loader": "^7.1.0",
-		"vue-template-compiler": "^2.5.22"
-	},
-	"dependencies": {
-		"classnames": "^2.2.6"
-	}
+    "name": "taproot-plugin",
+    "version": "1.0.0",
+    "description": "Taproot plugin adds functionality to the Taproot WordPress theme.",
+    "author": "Sky Shabatura",
+    "license": "GPL-2.0+",
+    "homepage": "https://taproot-theme.com",
+    "main": "assets/js/app.js",
+    "scripts": {
+        "build": "npm run prod && npm run i18n && npm run export",
+        "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch:sync": "cross-env sync=1 NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "cross-env sync=1 NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "export": "cross-env export=1 NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "i18n": "npm run i18n:textdomain && npm run i18n:pot",
+        "i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,node_modules",
+        "i18n:pot": "npx wpi18n makepot"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skyshab/taproot-plugin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/skyshab/taproot/issues"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.0.0",
+        "lodash": "^3.3.4",
+        "browser-sync": "^2.26.3",
+        "browser-sync-webpack-plugin": "2.2.2",
+        "copy-webpack-plugin": "^4.6.0",
+        "cross-env": "^5.2.0",
+        "imagemin-mozjpeg": "^6.0.0",
+        "imagemin-webpack-plugin": "^2.4.0",
+        "laravel-mix": "^4.0.14",
+        "node-wp-i18n": "^1.2.2",
+        "postcss-preset-env": "^6.5.0",
+        "rimraf": "^2.6.3",
+        "sass": "^1.16.0",
+        "sass-loader": "^7.1.0",
+        "vue-template-compiler": "^2.5.22"
+    },
+    "dependencies": {
+        "classnames": "^2.2.6"
+    }
 }

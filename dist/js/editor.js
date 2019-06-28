@@ -156,11 +156,11 @@ addAction('taproot.plugin.headerImageChange', 'skyshab/taprootPlugin/components'
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./assets/js/editor/hero/utilities.js");
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block - Edit
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for displaying the hero area block in the editor.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -174,6 +174,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
+ * Internal dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -181,40 +186,7 @@ var withSelect = window.wp.data.withSelect;
 var compose = window.wp.compose.compose;
 var InnerBlocks = window.wp.blockEditor.InnerBlocks;
 
-var getBackgroundImage = function getBackgroundImage() {
-  var headerImageType = wp.data.select('core/editor').getEditedPostAttribute('meta')['taproot_custom_header_image_type'];
-  var image = false;
-
-  if ('featured' === headerImageType) {
-    var _wp$data$select = wp.data.select('core'),
-        getMedia = _wp$data$select.getMedia;
-
-    var _wp$data$select2 = wp.data.select('core/editor'),
-        getEditedPostAttribute = _wp$data$select2.getEditedPostAttribute;
-
-    if (getEditedPostAttribute('featured_media')) {
-      var media = getMedia(getEditedPostAttribute('featured_media'));
-
-      if (media && media.source_url && 'undefined' !== media.source_url) {
-        image = media.source_url;
-      }
-    }
-  } else if ('default' === headerImageType) {
-    if (typeof taprootDefaultHeaderImage !== 'undefined') {
-      image = taprootDefaultHeaderImage;
-    }
-  } else if ('custom' === headerImageType) {
-    image = wp.data.select('core/editor').getEditedPostAttribute('meta')['taproot_custom_header_image'];
-  }
-
-  if (image) {
-    return "url(".concat(image, ")");
-  }
-
-  return false;
-};
-
-function GroupEdit(_ref) {
+function HeroEdit(_ref) {
   var className = _ref.className,
       hasInnerBlocks = _ref.hasInnerBlocks,
       backgroundImage = _ref.backgroundImage;
@@ -245,9 +217,9 @@ function GroupEdit(_ref) {
   var block = getBlock(clientId);
   return {
     hasInnerBlocks: !!(block && block.innerBlocks.length),
-    backgroundImage: getBackgroundImage()
+    backgroundImage: Object(_utilities__WEBPACK_IMPORTED_MODULE_1__["getHeroImage"])()
   };
-})])(GroupEdit));
+})])(HeroEdit));
 
 /***/ }),
 
@@ -261,10 +233,9 @@ function GroupEdit(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block - Icon
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for the hero block icon
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -304,10 +275,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icon */ "./assets/js/editor/hero/icon.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./save */ "./assets/js/editor/hero/save.js");
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for the hero area block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -322,34 +292,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * WordPress dependencies
+ */
 
-(function (wp) {
-  /**
-   * WordPress dependencies
-   */
-  var __ = wp.i18n.__;
-  var registerBlockType = wp.blocks.registerBlockType; // register the block
+var __ = wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType; // register the block
 
-  registerBlockType('taproot/hero', {
-    title: __('Hero Content'),
-    category: 'common',
-    icon: _icon__WEBPACK_IMPORTED_MODULE_1__["default"],
-    description: __('A block for adding custom header content'),
-    keywords: [__('hero'), __('taproot'), __('section')],
-    supports: {
-      align: false,
-      anchor: false,
-      html: false,
-      inserter: false,
-      multiple: false,
-      reusable: false,
-      isLocked: true
-    },
-    transforms: {},
-    edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
-    save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
-  });
-})(window.wp);
+registerBlockType('taproot/hero', {
+  title: __('Hero Content'),
+  category: 'common',
+  icon: _icon__WEBPACK_IMPORTED_MODULE_1__["default"],
+  description: __('A block for adding custom header content'),
+  keywords: [__('hero'), __('taproot'), __('section')],
+  supports: {
+    align: false,
+    anchor: false,
+    html: false,
+    inserter: false,
+    multiple: false,
+    reusable: false,
+    isLocked: true
+  },
+  transforms: {},
+  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
+  save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
+});
 
 /***/ }),
 
@@ -366,10 +334,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /**
- * Block Editor Custom Settings Panel.
+ * Hero Area Block - Save
  *
- * This file handles the JavaScript for creating a custom panel
- * in the block editor for post level settings.
+ * This file handles the JavaScript for the hero block on the front end.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -396,6 +363,68 @@ function save() {
 
 /***/ }),
 
+/***/ "./assets/js/editor/hero/utilities.js":
+/*!********************************************!*\
+  !*** ./assets/js/editor/hero/utilities.js ***!
+  \********************************************/
+/*! exports provided: getHeroImage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getHeroImage", function() { return getHeroImage; });
+/**
+ * Hero Block Utility Functions
+ *
+ * This file contains utility functions for the hero area block.
+ *
+ * @package   Taproot
+ * @author    Sky Shabatura <theme@sky.camp>
+ * @copyright 2019 Sky Shabatura
+ * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
+ * @link      https://taproot-theme.com
+ */
+
+/**
+ * Get Hero Image
+ *
+ * @return string
+ */
+function getHeroImage() {
+  var headerImageType = wp.data.select('core/editor').getEditedPostAttribute('meta')['taproot_custom_header_image_type'];
+  var image = false;
+
+  if ('featured' === headerImageType) {
+    var _wp$data$select = wp.data.select('core'),
+        getMedia = _wp$data$select.getMedia;
+
+    var _wp$data$select2 = wp.data.select('core/editor'),
+        getEditedPostAttribute = _wp$data$select2.getEditedPostAttribute;
+
+    if (getEditedPostAttribute('featured_media')) {
+      var media = getMedia(getEditedPostAttribute('featured_media'));
+
+      if (media && media.source_url && 'undefined' !== media.source_url) {
+        image = media.source_url;
+      }
+    }
+  } else if ('default' === headerImageType) {
+    if (typeof taprootDefaultHeaderImage !== 'undefined') {
+      image = taprootDefaultHeaderImage;
+    }
+  } else if ('custom' === headerImageType) {
+    image = wp.data.select('core/editor').getEditedPostAttribute('meta')['taproot_custom_header_image'];
+  }
+
+  if (image) {
+    return "url(".concat(image, ")");
+  }
+
+  return false;
+}
+
+/***/ }),
+
 /***/ "./assets/js/editor/meta/edit.js":
 /*!***************************************!*\
   !*** ./assets/js/editor/meta/edit.js ***!
@@ -412,10 +441,9 @@ __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
- * Title Block - Edit
+ * Post Meta Block - Edit
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for displaying the post meta block in the editor.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -459,13 +487,13 @@ function MetaEdit(_ref) {
       setTextColor = _ref.setTextColor,
       metaItems = _ref.metaItems,
       toggles = _ref.toggles,
-      taxObj = _ref.taxObj;
+      taxonomies = _ref.taxonomies;
   return React.createElement(React.Fragment, null, React.createElement(InspectorControls, null, React.createElement(PanelBody, {
     title: __('Post Meta Settings')
   }, React.createElement(AlignmentToolbar, {
     value: attributes.align,
     onChange: function onChange(nextAlign) {
-      setAttributes({
+      return setAttributes({
         align: nextAlign
       });
     }
@@ -473,7 +501,7 @@ function MetaEdit(_ref) {
     label: __('Author'),
     checked: attributes.author,
     onChange: function onChange(selected) {
-      setAttributes({
+      return setAttributes({
         author: selected
       });
     }
@@ -481,11 +509,11 @@ function MetaEdit(_ref) {
     label: __('Date'),
     checked: attributes.date,
     onChange: function onChange(selected) {
-      setAttributes({
+      return setAttributes({
         date: selected
       });
     }
-  }), Object(_utilities__WEBPACK_IMPORTED_MODULE_2__["taxonomyToggles"])(setAttributes, toggles, taxObj)), React.createElement(PanelColorSettings, {
+  }), Object(_utilities__WEBPACK_IMPORTED_MODULE_2__["taxonomyToggles"])(setAttributes, toggles, taxonomies)), React.createElement(PanelColorSettings, {
     title: __('Color Settings'),
     initialOpen: false,
     colorSettings: [{
@@ -509,7 +537,7 @@ function MetaEdit(_ref) {
   var attributes = props.attributes;
   var values = attributes.values;
   var toggles = [];
-  var taxonomies = select('core').getTaxonomies();
+  var allTaxonomies = select('core').getTaxonomies();
   var postType = select('core/editor').getCurrentPostType();
 
   if (attributes.author) {
@@ -528,10 +556,10 @@ function MetaEdit(_ref) {
     });
   }
 
-  var taxObj = [];
+  var taxonomies = [];
 
-  if (taxonomies) {
-    taxonomies.map(function (taxonomy) {
+  if (allTaxonomies) {
+    allTaxonomies.map(function (taxonomy) {
       if (taxonomy.types.includes(postType)) {
         var taxName = taxonomy.name.toLowerCase(); // add to output if taxonomy is enabled
 
@@ -543,7 +571,7 @@ function MetaEdit(_ref) {
             icon: icon,
             value: Object(_utilities__WEBPACK_IMPORTED_MODULE_2__["getTaxonomyList"])(select, taxName, taxonomy.slug)
           });
-          taxObj.push(taxonomy.slug);
+          taxonomies.push(taxonomy.slug);
         } // add to controls output
 
 
@@ -560,7 +588,7 @@ function MetaEdit(_ref) {
   return {
     metaItems: metaItems,
     toggles: toggles,
-    taxObj: taxObj
+    taxonomies: taxonomies
   };
 })])(MetaEdit));
 
@@ -578,10 +606,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./assets/js/editor/meta/edit.js");
 /* harmony import */ var _transforms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./transforms */ "./assets/js/editor/meta/transforms.js");
 /**
- * Title Block
+ * Post Meta Block
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for the post meta block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -591,16 +618,16 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
- * WordPress dependencies
- */
-var __ = window.wp.i18n.__;
-var registerBlockType = wp.blocks.registerBlockType;
-/**
  * Internal dependencies
  */
 
 
- // register the block
+/**
+ * WordPress dependencies
+ */
+
+var __ = window.wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType; // register the block
 
 registerBlockType('taproot/post-meta', {
   title: __('Taproot Post Meta'),
@@ -679,8 +706,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 /**
  * Meta Block Component
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post Meta in the block editor content.
+ * This file handles the JavaScript for displaying the post meta block in the editor.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -690,15 +716,15 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  */
 
 /**
- * WordPress dependencies
- */
-var Component = wp.element.Component;
-var createElement = window.wp.element.createElement;
-/**
  * Internal dependencies
  */
 
+/**
+ * WordPress dependencies
+ */
 
+var Component = wp.element.Component;
+var createElement = window.wp.element.createElement;
 
 var TaprootMeta =
 /*#__PURE__*/
@@ -781,10 +807,9 @@ function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /**
- * Title Block - Transforms
+ * Post Meta Block - Transforms
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for the post meta block transforms.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -832,7 +857,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Meta Block Utility Functions
  *
- * This file contains utility functions for getting the post meta item values
+ * This file contains utility functions for the post meta block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -915,7 +940,7 @@ function getTaxonomyList(select, attribute, taxonomy) {
  * @return array
  */
 
-function taxonomyToggles(setAttributes, controls, taxObj) {
+function taxonomyToggles(setAttributes, controls, taxonomies) {
   if (!controls) return null;
   var toggles = [];
   var values = {};
@@ -933,17 +958,17 @@ function taxonomyToggles(setAttributes, controls, taxObj) {
         });
 
         if (selected) {
-          if (taxObj.indexOf(control.slug) === -1) {
-            taxObj.push(control.slug);
+          if (taxonomies.indexOf(control.slug) === -1) {
+            taxonomies.push(control.slug);
           }
         } else {
-          taxObj = taxObj.filter(function (item) {
+          taxonomies = taxonomies.filter(function (item) {
             return item !== control.slug;
           });
         }
 
         setAttributes({
-          taxonomies: taxObj
+          taxonomies: taxonomies
         });
       }
     }));
@@ -1017,12 +1042,16 @@ __webpack_require__.r(__webpack_exports__);
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
  * @link      https://taproot-theme.com
  */
+
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
 var compose = wp.compose.compose;
+var ToggleControl = wp.components.ToggleControl;
 var _wp$data = wp.data,
     withSelect = _wp$data.withSelect,
     withDispatch = _wp$data.withDispatch;
-var ToggleControl = wp.components.ToggleControl;
-var __ = wp.i18n.__;
 var _wp$blocks = wp.blocks,
     createBlock = _wp$blocks.createBlock,
     cloneBlock = _wp$blocks.cloneBlock;
@@ -1125,37 +1154,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var __ = wp.i18n.__;
 var PanelBody = wp.components.PanelBody;
 var compose = wp.compose.compose;
+var withSelect = wp.data.withSelect;
 var _wp$blockEditor = wp.blockEditor,
     AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
     BlockControls = _wp$blockEditor.BlockControls,
     InspectorControls = _wp$blockEditor.InspectorControls,
     withColors = _wp$blockEditor.withColors,
     PanelColorSettings = _wp$blockEditor.PanelColorSettings;
-var memo = wp.element.memo;
-var withSelect = wp.data.withSelect;
-var TitleColorUI = memo(function (_ref) {
-  var textColorValue = _ref.textColorValue,
-      setTextColor = _ref.setTextColor;
-  return React.createElement(PanelColorSettings, {
-    title: __('Color Settings'),
-    initialOpen: false,
-    colorSettings: [{
-      value: textColorValue,
-      onChange: setTextColor,
-      label: __('Text Color')
-    }]
-  });
-});
 
-function TitleEdit(_ref2) {
+function TitleEdit(_ref) {
   var _classnames;
 
-  var attributes = _ref2.attributes,
-      setAttributes = _ref2.setAttributes,
-      className = _ref2.className,
-      textColor = _ref2.textColor,
-      setTextColor = _ref2.setTextColor,
-      content = _ref2.content;
+  var attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes,
+      className = _ref.className,
+      textColor = _ref.textColor,
+      setTextColor = _ref.setTextColor,
+      content = _ref.content;
   var align = attributes.align,
       level = attributes.level;
   var tagName = 'h' + level;
@@ -1182,13 +1197,18 @@ function TitleEdit(_ref2) {
   }), React.createElement("p", null, __('Text Alignment')), React.createElement(AlignmentToolbar, {
     value: align,
     onChange: function onChange(nextAlign) {
-      setAttributes({
+      return setAttributes({
         align: nextAlign
       });
     }
-  })), React.createElement(TitleColorUI, {
-    setTextColor: setTextColor,
-    textColorValue: textColor.color
+  })), React.createElement(PanelColorSettings, {
+    title: __('Color Settings'),
+    initialOpen: false,
+    colorSettings: [{
+      value: textColor.color,
+      onChange: setTextColor,
+      label: __('Text Color')
+    }]
   })), React.createElement(_title__WEBPACK_IMPORTED_MODULE_2__["default"], {
     content: content,
     tagName: tagName,
@@ -1234,16 +1254,16 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
- * WordPress dependencies
- */
-var __ = window.wp.i18n.__;
-var registerBlockType = wp.blocks.registerBlockType;
-/**
  * Internal dependencies
  */
 
 
- // register the block
+/**
+ * WordPress dependencies
+ */
+
+var __ = window.wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType; // register the block
 
 registerBlockType('taproot/title', {
   title: __('Taproot Title'),

@@ -30,89 +30,81 @@ import TaprootTitle from './title';
 const { __ } = wp.i18n;
 const { PanelBody } = wp.components;
 const { compose } = wp.compose;
-const {
-	AlignmentToolbar,
-	BlockControls,
-	InspectorControls,
-	withColors,
-	PanelColorSettings,
-} = wp.blockEditor;
-const { memo } = wp.element;
 const { withSelect } = wp.data;
+const {
+    AlignmentToolbar,
+    BlockControls,
+    InspectorControls,
+    withColors,
+    PanelColorSettings,
+} = wp.blockEditor;
 
-const TitleColorUI = memo(
-	function( {
-		textColorValue,
-		setTextColor,
-	} ) {
-		return (
-			<PanelColorSettings
-				title={ __( 'Color Settings' ) }
-				initialOpen={ false }
-				colorSettings={ [
-					{
-						value: textColorValue,
-						onChange: setTextColor,
-						label: __( 'Text Color' ),
-					},
-				] }
-			/>
-		);
-	}
-);
 
 function TitleEdit( {
-	attributes,
-	setAttributes,
-	className,
-	textColor,
+    attributes,
+    setAttributes,
+    className,
+    textColor,
     setTextColor,
     content
 } ) {
-	const { align, level } = attributes;
+    const { align, level } = attributes;
     const tagName = 'h' + level;
 
-	return (
-		<>
-			<BlockControls>
-				<TitleToolbar minLevel={ 1 } maxLevel={ 3 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
-			</BlockControls>
-			<InspectorControls>
-				<PanelBody title={ __( 'Title Settings' ) }>
-					<p>{ __( 'Level' ) }</p>
-					<TitleToolbar minLevel={ 1 } maxLevel={ 3 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
-					<p>{ __( 'Text Alignment' ) }</p>
-					<AlignmentToolbar
-						value={ align }
-						onChange={ ( nextAlign ) => {
-							setAttributes( { align: nextAlign } );
-						} }
-					/>
-				</PanelBody>
-				<TitleColorUI
-					setTextColor={ setTextColor }
-					textColorValue={ textColor.color }
-				/>
-			</InspectorControls>
+    return (
+        <>
+            <BlockControls>
+                <TitleToolbar
+                    minLevel={ 1 }
+                    maxLevel={ 3 }
+                    selectedLevel={ level }
+                    onChange={ newLevel => setAttributes( { level: newLevel } ) }
+                />
+            </BlockControls>
+            <InspectorControls>
+                <PanelBody title={ __( 'Title Settings' ) }>
+                    <p>{ __( 'Level' ) }</p>
+                    <TitleToolbar
+                        minLevel={ 1 }
+                        maxLevel={ 3 }
+                        selectedLevel={ level }
+                        onChange={ newLevel => setAttributes( { level: newLevel } ) }
+                    />
+                    <p>{ __( 'Text Alignment' ) }</p>
+                    <AlignmentToolbar
+                        value={ align }
+                        onChange={ nextAlign => setAttributes( { align: nextAlign } ) }
+                    />
+                </PanelBody>
+                <PanelColorSettings
+                    title={ __( 'Color Settings' ) }
+                    initialOpen={ false }
+                    colorSettings={[
+                        {
+                            value: textColor.color,
+                            onChange: setTextColor,
+                            label: __( 'Text Color' )
+                        }
+                    ]}
+                />
+            </InspectorControls>
             <TaprootTitle
                 content={ content }
-				tagName={ tagName }
-				className={ classnames( className, {
-					[ `has-text-align-${ align }` ]: align,
-					'has-text-color': textColor.color,
-					[ textColor.class ]: textColor.class,
-                } ) }
-				style={ {
-					color: textColor.color,
-				} }
+                tagName={ tagName }
+                className={ classnames( className, {
+                    [ `has-text-align-${ align }` ]: align,
+                    'has-text-color': textColor.color,
+                    [ textColor.class ]: textColor.class,
+                })}
+                style={ {color: textColor.color } }
             />
-		</>
-	);
+        </>
+    );
 }
 
 export default compose( [
     withColors( 'backgroundColor', { textColor: 'color' } ),
-    withSelect( ( select ) => {
+    withSelect( select => {
         return {
             content: select( 'core/editor' ).getEditedPostAttribute('title'),
         }

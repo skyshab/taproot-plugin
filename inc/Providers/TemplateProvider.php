@@ -29,28 +29,28 @@ use TaprootPlugin\Template\Template;
 class TemplateProvider extends ServiceProvider {
 
 
-	/**
-	 * Register classes and bind to the container
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function register() {
+    /**
+     * Register classes and bind to the container
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function register() {
 
-		$this->app->singleton( Template::class );
+        $this->app->singleton( Template::class );
 
-	}
+    }
 
 
-	/**
-	 * Boot Class Instances
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function boot() {
+    /**
+     * Boot Class Instances
+     *
+     * @since  1.0.0
+     * @access public
+     * @return void
+     */
+    public function boot() {
 
         $this->app->resolve( Template::class )->boot();
 

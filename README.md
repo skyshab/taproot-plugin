@@ -8,15 +8,13 @@ A plugin for adding functionality to the Taproot WordPress theme.
 
 ## Description
 
-This plugin...
+This plugin adds custom blocks to be used in the block editor when using the Taproot theme.
 
 
 ## Installation
 1. In your admin panel, go to Appearance -> Plugins and click the 'Add New' button.
 2. Upload zipped file.
 3. Activate.
-
-## Resources
 
 
 ## Copyright and License

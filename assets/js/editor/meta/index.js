@@ -1,8 +1,7 @@
 /**
- * Title Block
+ * Post Meta Block
  *
- * This file handles the JavaScript for creating a custom block
- * to display the page or post title in the block editor content.
+ * This file handles the JavaScript for the post meta block.
  *
  * @package   Taproot
  * @author    Sky Shabatura <theme@sky.camp>
@@ -13,16 +12,16 @@
 
 
 /**
- * WordPress dependencies
- */
-const { __ } = window.wp.i18n;
-const { registerBlockType } = wp.blocks;
-
-/**
  * Internal dependencies
  */
 import edit from './edit';
 import transforms from './transforms';
+
+/**
+ * WordPress dependencies
+ */
+const { __ } = window.wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 
 // register the block
@@ -33,13 +32,13 @@ registerBlockType('taproot/post-meta', {
     description: __( 'Display the page/post meta in the content' ),
     keywords: [ __( 'metadata' ), __( 'taproot' ), __( 'post title' ) ],
     supports: {
-		className: false,
-		anchor: false,
+        className: false,
+        anchor: false,
         multiple: true,
         reusable: false,
-		align: false,
+        align: false,
     },
-	attributes: {
+    attributes: {
         values: {
             type: 'object',
             default: {}
@@ -56,16 +55,16 @@ registerBlockType('taproot/post-meta', {
             type: 'array',
             default: []
         },
-		textColor: {
-			type: 'string'
-		},
-		customTextColor: {
-			type: 'string'
+        textColor: {
+            type: 'string'
+        },
+        customTextColor: {
+            type: 'string'
         },
         align: {
             type: 'string'
         }
-	},
+    },
     transforms,
     edit
 })
