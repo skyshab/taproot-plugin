@@ -46,3 +46,4 @@ addAction('taproot.plugin.headerImageChange', 'skyshab/taprootPlugin/components'
 
 import './editor/title/index.js';
 import './editor/meta/index.js';
+import './editor/breadcrumbs/index.js';

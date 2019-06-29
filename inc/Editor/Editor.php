@@ -14,8 +14,9 @@
 namespace TaprootPlugin\Editor;
 
 use Hybrid\Contracts\Bootable;
+use Hybrid\Breadcrumbs\Trail as Breadcrumbs;
+use function Taproot\Template\Icons\location as icon;
 use function TaprootPlugin\taproot_plugin;
-
 
 /**
  * Handles block editor functionality
@@ -81,6 +82,33 @@ class Editor implements Bootable {
         register_block_type( 'taproot/post-meta', array(
             'editor_script' => 'taproot-plugin-editor-js',
             'render_callback' => [ $this, 'get_the_meta']
+        ));
+
+        register_block_type( 'taproot/breadcrumbs', array(
+            'editor_script' => 'taproot-plugin-editor-js',
+            'render_callback' => [ $this, 'get_the_breadcrumbs'],
+            'attributes'      => [
+                'textColor' => [
+                    'type' => 'string'
+                ],
+                'customTextColor' => [
+                    'type' => 'string'
+                ],
+                'align' => [
+                    'type' => 'string'
+                ]
+            ]
+        ));
+
+        register_block_type( 'taproot/postnav', array(
+            'editor_script' => 'taproot-plugin-editor-js',
+            'render_callback' => [ $this, 'get_the_postnav'],
+            'attributes'      => [
+                'labels' => [
+                    'default' => 'false',
+                    'type'    => 'bool'
+                ]
+            ]
         ));
     }
 
@@ -155,14 +183,14 @@ class Editor implements Bootable {
         if( $attributes['author'] !== false ) {
             global $post;
             $author_id = $post->post_author;
-            $author_icon = \Taproot\Template\Icons\location( 'author', ['icon' => 'user'] );
+            $author_icon = icon( 'author', ['icon' => 'user'] );
             $author_name = sprintf('<span class="taproot-meta__item__content">%s</span>', get_the_author_meta('display_name', $author_id) );
             $content .= sprintf('<span class="taproot-meta__item taproot-meta__item--author">%s %s</span>', $author_icon, $author_name);
         }
 
         // Display Date
         if( $attributes['date'] !== false ) {
-            $date_icon = \Taproot\Template\Icons\location( 'date', ['icon' => 'calendar'] );
+            $date_icon = icon( 'date', ['icon' => 'calendar'] );
             $content .= \Hybrid\Post\render_date([
                 'class' => 'taproot-meta__item__content',
                 'before' => '<span class="taproot-meta__item taproot-meta__item--date ">' . $date_icon,
@@ -171,20 +199,81 @@ class Editor implements Bootable {
         }
 
         // Display Taxonomies
-        $taxonomies = ( isset($attributes['taxonomies']) && !empty($attributes['taxonomies']) ) ? $attributes['taxonomies'] : [];
-        foreach( $taxonomies as $taxonomy ) {
+        $taxonomies = ( isset($attributes['taxonomies']) && !empty($attributes['taxonomies']) ) ? $attributes['taxonomies'] : false;
+        if( $taxonomies ) {
+            foreach( $taxonomies as $taxonomy ) {
 
-            $icon = ( is_taxonomy_hierarchical( $taxonomy ) ) ?
-                \Taproot\Template\Icons\location( 'categories', ['icon' => 'list-ul'] ) :
-                \Taproot\Template\Icons\location( 'tags', ['icon' => 'tags'] );
+                if ( ! taxonomy_exists($taxonomy) ) {
+                    continue;
+                }
 
-            $content .= \Hybrid\Post\render_terms([
-                'taxonomy' => $taxonomy,
-                'before' => sprintf( '<span class=" taproot-meta__item taproot-meta__item--%s">%s', $taxonomy, $icon ),
-                'after' => '</span>',
-                'class' => sprintf( 'taproot-meta__terms taproot-meta__terms--%s', $taxonomy)
-            ]);
+                $icon = ( is_taxonomy_hierarchical( $taxonomy ) ) ?
+                    icon( 'categories', ['icon' => 'list-ul'] ) :
+                    icon( 'tags', ['icon' => 'tags'] );
+
+                $content .= \Hybrid\Post\render_terms([
+                    'taxonomy' => $taxonomy,
+                    'before' => sprintf( '<span class=" taproot-meta__item taproot-meta__item--%s">%s', $taxonomy, $icon ),
+                    'after' => '</span>',
+                    'class' => sprintf( 'taproot-meta__terms taproot-meta__terms--%s', $taxonomy)
+                ]);
+            }
         }
+
+        // Close element
+        $content .= '</p>';
+
+        // Return the meta block content
+        return $content;
+    }
+
+
+    /**
+     * Callback to render Breadcrumbs component
+     *
+     * @since 1.0.0
+     * @return string
+     */
+    public function get_the_breadcrumbs($attributes, $content) {
+
+        $defaults = [
+            'textColor' => false,
+            'customTextColor' => false,
+            'align' => false
+        ];
+        $attributes = wp_parse_args($attributes, $defaults);
+
+        // not a good way to add the styles to the breadcrumbs container
+        $styles = ( $attributes['customTextColor'] ) ? sprintf('color: %s', $attributes['customTextColor']) : '';
+
+        $classes = 'breadcrumbs';
+
+        if( $attributes['textColor'] ) {
+            $classes .= sprintf(' has-%s-color', $attributes['textColor']);
+        }
+
+        if( $attributes['align'] ) {
+            $classes .= sprintf(' has-text-align-%s', $attributes['align']);
+        }
+
+        return Breadcrumbs::render( ['post' => get_post(), 'container_class' => $classes] );
+    }
+
+
+    /**
+     * Callback to render taproot meta block
+     *
+     * @since 1.0.0
+     * @return string
+     */
+    public function get_the_postnav($attributes, $content) {
+
+        // Open element
+        $content = sprintf('<p class="%s" style="%s">', $classes, $styles );
+
+            $content .= '<span class="taproot-postnav__previous"><</span>';
+
+            $content .= '<span class="taproot-postnav__next">></span>';
 
         // Close element
         $content .= '</p>';

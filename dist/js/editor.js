@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_sidebar_EnableHero_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editor/sidebar/EnableHero.js */ "./assets/js/editor/sidebar/EnableHero.js");
 /* harmony import */ var _editor_title_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor/title/index.js */ "./assets/js/editor/title/index.js");
 /* harmony import */ var _editor_meta_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor/meta/index.js */ "./assets/js/editor/meta/index.js");
+/* harmony import */ var _editor_breadcrumbs_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor/breadcrumbs/index.js */ "./assets/js/editor/breadcrumbs/index.js");
 /**
  * Primary front-end script.
  *
@@ -142,6 +143,151 @@ addAction('taproot.plugin.headerImageChange', 'skyshab/taprootPlugin/components'
 });
 
 
+
+
+/***/ }),
+
+/***/ "./assets/js/editor/breadcrumbs/edit.js":
+/*!**********************************************!*\
+  !*** ./assets/js/editor/breadcrumbs/edit.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Title Block - Edit
+ *
+ * This file handles the JavaScript for creating a custom block
+ * to display the page or post title in the block editor content.
+ *
+ * @package   Taproot
+ * @author    Sky Shabatura <theme@sky.camp>
+ * @copyright 2019 Sky Shabatura
+ * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
+ * @link      https://taproot-theme.com
+ */
+
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var _wp$components = wp.components,
+    PanelBody = _wp$components.PanelBody,
+    ServerSideRender = _wp$components.ServerSideRender;
+var compose = wp.compose.compose;
+var _wp$blockEditor = wp.blockEditor,
+    AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
+    InspectorControls = _wp$blockEditor.InspectorControls,
+    withColors = _wp$blockEditor.withColors,
+    PanelColorSettings = _wp$blockEditor.PanelColorSettings;
+
+function BreadcrumbsEdit(_ref) {
+  var attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes,
+      textColor = _ref.textColor,
+      setTextColor = _ref.setTextColor;
+  var align = attributes.align;
+  return React.createElement(React.Fragment, null, React.createElement(InspectorControls, null, React.createElement(PanelBody, {
+    title: __('Breadcrumbs Settings')
+  }, React.createElement("p", null, __('Breadcrumbs Alignment')), React.createElement(AlignmentToolbar, {
+    value: align,
+    onChange: function onChange(nextAlign) {
+      return setAttributes({
+        align: nextAlign
+      });
+    }
+  })), React.createElement(PanelColorSettings, {
+    title: __('Color Settings'),
+    initialOpen: false,
+    colorSettings: [{
+      value: textColor.color,
+      onChange: setTextColor,
+      label: __('Text Color')
+    }]
+  })), React.createElement(ServerSideRender, {
+    block: "taproot/breadcrumbs",
+    attributes: attributes
+  }));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (compose([withColors('backgroundColor', {
+  textColor: 'color'
+})])(BreadcrumbsEdit));
+
+/***/ }),
+
+/***/ "./assets/js/editor/breadcrumbs/index.js":
+/*!***********************************************!*\
+  !*** ./assets/js/editor/breadcrumbs/index.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./assets/js/editor/breadcrumbs/edit.js");
+/**
+ * Breadcrumbs Block
+ *
+ * This file handles the JavaScript for the breadcrumbs component.
+ *
+ * @package   Taproot
+ * @author    Sky Shabatura <theme@sky.camp>
+ * @copyright 2019 Sky Shabatura
+ * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
+ * @link      https://taproot-theme.com
+ */
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var __ = window.wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType;
+var _wp$components = wp.components,
+    PanelBody = _wp$components.PanelBody,
+    ServerSideRender = _wp$components.ServerSideRender;
+var compose = wp.compose.compose;
+var withSelect = wp.data.withSelect;
+var _wp$blockEditor = wp.blockEditor,
+    AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
+    BlockControls = _wp$blockEditor.BlockControls,
+    InspectorControls = _wp$blockEditor.InspectorControls,
+    withColors = _wp$blockEditor.withColors,
+    PanelColorSettings = _wp$blockEditor.PanelColorSettings; // register the block
+
+registerBlockType('taproot/breadcrumbs', {
+  title: __('Taproot Breadcrumbs'),
+  category: 'common',
+  icon: 'sticky',
+  description: __('Display the breadcrumbs component in the content'),
+  keywords: [__('breacrumbs'), __('taproot'), __('navigation')],
+  supports: {
+    className: false,
+    anchor: false,
+    multiple: true,
+    reusable: true,
+    align: false
+  },
+  attributes: {
+    textColor: {
+      type: 'string'
+    },
+    customTextColor: {
+      type: 'string'
+    },
+    align: {
+      type: 'string'
+    }
+  },
+  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
 
 /***/ }),
 
