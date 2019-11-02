@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "lodash": "^3.3.4",
+        "lodash": "^4.17.15",
         "browser-sync": "^2.26.3",
         "browser-sync-webpack-plugin": "2.2.2",
         "copy-webpack-plugin": "^4.6.0",
